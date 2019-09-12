@@ -5,7 +5,6 @@ import { daysIntoYear, daysInTheYear, heatMapColorforValue, sortList, groupBy } 
 import { Transactions } from './data/transactions'
 
 export const App = () => {
-  const [name, setName] = React.useState("initialName");
   const [result, setResult] = React.useState([]);
   const [daysInYear, setDaysInYear] = React.useState(0);
   /**
@@ -20,7 +19,6 @@ export const App = () => {
   const transactionSuccess=(total, currentValue)=>{
       let successAmount=currentValue.transactionType==="success"?currentValue.amount:0
       let failureAmount=currentValue.transactionType==="failed"?currentValue.amount:0
-      
       return { success : total.success + successAmount , failure: total.failure + failureAmount, daysIntoYear: daysIntoYear(new Date(currentValue.date)) }
   }
   /**
@@ -87,9 +85,6 @@ export const App = () => {
            results.push(getNoTransactionDay(results.length + 1))
     }
   }
-  const setUsernameState = (event) => {
-    setName(event.target.value);
-  };
   React.useEffect(() => {
     //Read, order and aggregate/reduce the data
     let results=[];
@@ -97,13 +92,11 @@ export const App = () => {
     let groupedtransactions = groupBy(ordereredList, "date")
     let arrayFromObject=Object.entries(groupedtransactions)
     reduceTransactions(arrayFromObject, results)
-    //console.log("reduceTransactions", results)
     setResult(results)
     setDaysInYear(daysIntoYear(new Date(`${ new Date().getFullYear() }-12-31`)))
 
   }, []);
   
-//console.log("result",result)
   return (
     <>
       <Heatmap userName={name} result={result} daysInYear={daysInYear} />
