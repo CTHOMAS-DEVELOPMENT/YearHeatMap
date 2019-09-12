@@ -10,10 +10,11 @@ export const heatMapColorforValue=(value)=>{
   var h = value * 240
   return "hsl(" + h + ", 100%, 50%)";
 }
-export const sortList=(list,field)=>{
-  return list.sort((a,b)=> new Date(a[field]).getTime() - new Date(b[field]).getTime() )
+
+export const sortList=( list: any,field: string )=>{
+  return list.sort((a: string,b: string)=> new Date(a[field]).getTime() - new Date(b[field]).getTime() )
 }
-export const groupBy=(objectArray, property)=> {
+export const groupBy=(objectArray: any, property: string )=> {
   return objectArray.reduce(function (acc, obj) {
     var key = obj[property];
     if (!acc[key]) {

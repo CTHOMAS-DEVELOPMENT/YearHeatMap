@@ -7,6 +7,12 @@ import { Transactions } from './data/transactions'
 export const App = () => {
   const [result, setResult] = React.useState([]);
   const [daysInYear, setDaysInYear] = React.useState(0);
+  interface Props {
+    sortList: (list: Object, field: string ) => any;
+    groupBy: (objectArray: any, property: string ) => any;
+    reduceTransactions:(allData: any,results: any) => any;
+    setDaysInYear:(date: Object)=> string;
+  }
   /**
   * transactionSuccess -
   * 
@@ -57,7 +63,7 @@ export const App = () => {
      *  (2) Adds the "Days into year" value to the "result" object
      *  (3) Adds missing "No trade day object" to the "result" object
      */
-  const reduceTransactions=(allData,results)=>
+  const reduceTransactions=(allData: any,results: any)=>
   {
         let missingDayInsert=0;
         allData.forEach(function(dayData,index,arr) {
