@@ -1,6 +1,6 @@
 # Application State (Demo Application)
 
-A heatmap showing a visual representation of data (How individuals subscribe and pay for services by days of a year).
+A heatmap showing a visual representation of data per day for one year. Derived from a json file.
 The “redder” the heat map square indicates the higher the failed transaction by accumulated value for that day and the “greener” it is the higher the successful transaction by accumulated value for that day.
 
 ## Installation and run
