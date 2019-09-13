@@ -3,8 +3,8 @@ import { transactionDay } from "../models/transactionDay"
 interface Props {
     userName: string;
     result: object;
-     daysInYear: number;
-    }
+    daysInYear: number;
+}
 const Heatmap = (props: Props) => {
    
     return (

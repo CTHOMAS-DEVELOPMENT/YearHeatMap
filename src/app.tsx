@@ -12,6 +12,8 @@ export const App = () => {
     groupBy: (objectArray: any, property: string ) => any;
     reduceTransactions:(allData: any,results: any) => any;
     setDaysInYear:(date: Object)=> string;
+    heatMapColorforValue:(colorNumber: number)=> string;
+    daysIntoYear:(date: Object)=> number;
   }
   /**
   * transactionSuccess -
