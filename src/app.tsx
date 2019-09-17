@@ -14,17 +14,18 @@ export const App = () => {
     setDaysInYear:(date: Object)=> string;
     heatMapColorforValue:(colorNumber: number)=> string;
     daysIntoYear:(date: Object)=> number;
+    getNoTransactionDay:(daysIntoYear: number) => Object
+    transactionSuccess:(total:any, currentValue:any) => Object
   }
   /**
   * transactionSuccess -
   * 
-  * Param
-  *  total - The aggregated object
-  *  currentValue - The trade object one of potentially many that made up that day's trading
+  * @param total - The aggregated object
+  * @param currentValue - The trade object one of potentially many that made up that day's trading
   * About/Returns - 
   *  Reducer function which is used to aggregate the success and failure attributes of the result object
   */
-  const transactionSuccess=(total, currentValue)=>{
+  const transactionSuccess=(total: any, currentValue: any)=>{
       let successAmount=currentValue.transactionType==="success"?currentValue.amount:0
       let failureAmount=currentValue.transactionType==="failed"?currentValue.amount:0
       return { success : total.success + successAmount , failure: total.failure + failureAmount, daysIntoYear: daysIntoYear(new Date(currentValue.date)) }
@@ -32,9 +33,7 @@ export const App = () => {
   /**
   * getDaysTransactionSuccess -
   * 
-  * Param -
-  *  dayData - A trade object
-  * 
+  * @param dayData - A trade object
   * About/Returns -
   *  Aggregates the success and failure totals for each trading day. Adds the daysIntoYear attribute.
   */
@@ -44,21 +43,19 @@ export const App = () => {
   /**
    * getNoTransactionDay -
    * 
-   * Param -
-   *  daysIntoYear - The correct "trading day" number
+   * @param daysIntoYear - The correct "trading day" number
    * About/Returns -
    *  Returns the "No trading day" object
    * 
    */
-  const getNoTransactionDay=(daysIntoYear)=>{
+  const getNoTransactionDay=(daysIntoYear: number)=>{
      return {success: 0, failure: 0, daysIntoYear: daysIntoYear, colorNumber: 0, heatColor: "hsl(0, 100%, 50%)"}
   }
       /**
      * reduceTransactions -
      * 
-     * Params -
-     *  allData - The derived data from the json file. Ordered and Aggregated array of objects
-     *  results - The result array reference
+     * @param allData - The derived data from the json file. Ordered and Aggregated array of objects
+     * @param results - The result array reference
      * About/Returns - 
      *  (1) Totals success and failure for the day and adds these attributes to the "result" object
      *  allData - All the processed (Ordered/aggregated) data
@@ -67,30 +64,29 @@ export const App = () => {
      */
   const reduceTransactions=(allData: any,results: any)=>
   {
-        let missingDayInsert=0;
-        allData.forEach(function(dayData,index,arr) {
-            let aggegatedValues=getDaysTransactionSuccess(dayData);
+    let missingDayInsert=0;
+    allData.forEach((dayData: Object,index: number)=> {
+      let aggegatedValues=getDaysTransactionSuccess(dayData);
 
-            //'Success', and the associated color, is derived from success/(success+failure) 
-            aggegatedValues.colorNumber=(aggegatedValues.success/(aggegatedValues.success + aggegatedValues.failure))/2
-            aggegatedValues.heatColor=heatMapColorforValue(aggegatedValues.colorNumber)
+      //'Success', and the associated color, is derived from success/(success+failure) 
+      aggegatedValues.colorNumber=(aggegatedValues.success/(aggegatedValues.success + aggegatedValues.failure))/2
+      aggegatedValues.heatColor=heatMapColorforValue(aggegatedValues.colorNumber)
 
-            //Was there a 'No trading day' ? 
-            if(aggegatedValues.daysIntoYear > index+1+missingDayInsert)
-            {
-                missingDayInsert++;
-                results.push(getNoTransactionDay(index+missingDayInsert))
-            }
+      //Was there a 'No trading day' ? 
+      if(aggegatedValues.daysIntoYear > index+1+missingDayInsert)
+      {
+        missingDayInsert++;
+        results.push(getNoTransactionDay(index+missingDayInsert))
+      }
 
-            results.push(aggegatedValues)
-            
-        },this);
+      results.push(aggegatedValues)
+    },this);
 
-        let remainingCollections=daysInTheYear() - results.length;
+    let remainingCollections=daysInTheYear() - results.length;
 
-        //Append 'No trading' object to the incomplete year result set
-        for (let i = 0; i<remainingCollections; i++) {
-           results.push(getNoTransactionDay(results.length + 1))
+    //Append 'No trading' object to the incomplete year result set
+    for (let i = 0; i<remainingCollections; i++) {
+      results.push(getNoTransactionDay(results.length + 1))
     }
   }
   React.useEffect(() => {
