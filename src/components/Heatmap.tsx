@@ -1,7 +1,6 @@
 import * as React from "react";
 import { transactionDay } from "../models/transactionDay"
 interface Props {
-    userName: string;
     result: object;
     daysInYear: number;
 }

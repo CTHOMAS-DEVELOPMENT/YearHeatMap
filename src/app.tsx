@@ -103,7 +103,7 @@ export const App = () => {
   
   return (
     <>
-      <Heatmap userName={name} result={result} daysInYear={daysInYear} />
+      <Heatmap result={result} daysInYear={daysInYear} />
     </>
   );
 };
