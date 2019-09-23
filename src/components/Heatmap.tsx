@@ -1,8 +1,8 @@
 import * as React from "react";
 import { transactionDay } from "../models/transactionDay"
 interface Props {
-    result: object;
-    daysInYear: number;
+    result: object
+    daysInYear: number
 }
 const Heatmap = (props: Props) => {
    

@@ -49,7 +49,7 @@ export const App = () => {
    * 
    */
   const getNoTransactionDay=(daysIntoYear: number)=>{
-     return {success: 0, failure: 0, daysIntoYear: daysIntoYear, colorNumber: 0, heatColor: "hsl(0, 100%, 50%)"}
+     return {success: 0, failure: 0, daysIntoYear: daysIntoYear, colorNumber: 0, heatColor: "hsl(0, 0%, 50%)"}
   }
       /**
      * reduceTransactions -
@@ -88,6 +88,11 @@ export const App = () => {
     for (let i = 0; i<remainingCollections; i++) {
       results.push(getNoTransactionDay(results.length + 1))
     }
+    //Make the initial results contain the non-year days
+    let dayOfWeekYearStarted=new Date(`${ new Date().getFullYear() }-01-01`).getDay() 
+    for (let i = 0; i < dayOfWeekYearStarted; i++) {
+        results.unshift(getNoTransactionDay(-1))
+    }
   }
   React.useEffect(() => {
     //Read, order and aggregate/reduce the data
@@ -96,8 +101,8 @@ export const App = () => {
     let groupedtransactions = groupBy(ordereredList, "date")
     let arrayFromObject=Object.entries(groupedtransactions)
     reduceTransactions(arrayFromObject, results)
+    console.log("results",results)
     setResult(results)
-    setDaysInYear(daysIntoYear(new Date(`${ new Date().getFullYear() }-12-31`)))
 
   }, []);
   

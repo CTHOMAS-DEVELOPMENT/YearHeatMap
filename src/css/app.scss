@@ -1,3 +1,4 @@
+//Strategy 1
 ul {
   list-style-type: none;
 }
@@ -16,7 +17,7 @@ ul {
 .item {
   border:  1px solid black; 
 }
-
+//Strategy 2
 :root {
   --square-size: 15px;
   --square-gap: 5px;
@@ -62,7 +63,6 @@ ul {
   grid-auto-flow: column;
   grid-auto-columns: var(--square-size);
 }
-
 
 /* Other styling */
 
