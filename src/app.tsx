@@ -101,7 +101,6 @@ export const App = () => {
     let groupedtransactions = groupBy(ordereredList, "date")
     let arrayFromObject=Object.entries(groupedtransactions)
     reduceTransactions(arrayFromObject, results)
-    console.log("results",results)
     setResult(results)
 
   }, []);
